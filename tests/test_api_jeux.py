@@ -203,6 +203,13 @@ def test_statistiques(client, entetes):
     assert corps["par_genre"] == {"Party": 1, "Roguelike": 1}
 
 
+def test_statistiques_catalogue_vide(client):
+    reponse = client.get(f"{BASE}/jeux/statistiques")
+
+    assert reponse.status_code == 200
+    assert reponse.json() == {"nombre": 0, "moyenne": 0.0, "meilleure_note": None, "par_genre": {}}
+
+
 def test_editeur_imbrique_dans_la_reponse(client, entetes, editeur):
     cree = creer_jeu(client, entetes, editeur_id=editeur.id)
 
